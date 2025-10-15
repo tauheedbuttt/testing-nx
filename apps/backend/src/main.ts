@@ -10,8 +10,9 @@ import { AppModule } from './app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
-
-  (app as any).get('/', (req: any, res: any) => {
+  // can we use express here to add a root route?
+  const expressApp = app.getHttpAdapter().getInstance();
+  expressApp.get('/', (req, res) => {
     res.send('Hello World!');
   });
 
