@@ -5,11 +5,11 @@
   },
   "builds": [
     {
-      "src": "/apps/api/backend/main.ts",
+      "src": "/apps/backend/src/main.ts",
       "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/apps/api/backend/main.ts", "methods": ["GET"] }
+    { "src": "/(.*)", "dest": "/apps/backend/src/main.ts", "methods": ["GET"] }
   ]
 }
