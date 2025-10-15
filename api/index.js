@@ -1,44 +1,40 @@
-// org/api/index.js (The NON-CRASHING Debugging Wrapper)
+// org/api/index.js (The NEW Debugging Wrapper)
 
 const fs = require('fs');
 const path = require('path');
 
 // This is the function Vercel will attempt to execute
 module.exports = (req, res) => {
-  // Log the current directories immediately
-  console.log('--- VERCEL TASK ROOT (CWD) ---');
-  console.log('CWD:', process.cwd());
-  console.log('__dirname:', __dirname);
+  // --- VERCEL PATHS ---
+  console.log('--- VERCEL PATHS & DIRECTORIES ---');
+  console.log('CWD (Task Root?):', process.cwd());
+  console.log('__dirname (Function Root):', __dirname);
 
   try {
-    // Find the root of the task environment: /var/task
-    const taskRootPath = path.resolve(__dirname, '..');
-    console.log('Task Root Path (..):', taskRootPath);
+    const taskRootPath = path.resolve(__dirname, '..'); // Should be /var/task
 
-    // Log contents of the assumed target: /var/task/apps/backend/dist
-    const targetPath = path.join(taskRootPath, 'apps', 'backend', 'dist');
+    // --- LOG /var/task/ (TASK ROOT) CONTENTS ---
+    console.log('\n*** FILES IN /var/task/ (Root of Task) ***');
+    fs.readdirSync(taskRootPath).forEach((file) => {
+      const isDir = fs.lstatSync(path.join(taskRootPath, file)).isDirectory()
+        ? '(DIR)'
+        : '(FILE)';
+      console.log(`- ${file} ${isDir}`);
+    });
 
-    console.log(`\n*** TARGET PATH: ${targetPath} ***`);
-
-    if (fs.existsSync(targetPath)) {
-      fs.readdirSync(targetPath).forEach((file) => {
-        console.log(`- ${file}`);
-      });
-    } else {
-      console.error('*** TARGET PATH DOES NOT EXIST! ***');
-
-      // Log the contents of the entire task root for maximum visibility
-      console.log('\n*** FILES IN /var/task/ ***');
-      fs.readdirSync(taskRootPath).forEach((file) => {
-        console.log(`- ${file}`);
-      });
-    }
+    // --- LOG /var/task/api/ (FUNCTION ROOT) CONTENTS ---
+    console.log('\n*** FILES IN /var/task/api/ (Function Directory) ***');
+    fs.readdirSync(__dirname).forEach((file) => {
+      const isDir = fs.lstatSync(path.join(__dirname, file)).isDirectory()
+        ? '(DIR)'
+        : '(FILE)';
+      console.log(`- ${file} ${isDir}`);
+    });
   } catch (e) {
-    console.error('CRITICAL LOGGING ERROR:', e.message);
+    console.error('\nCRITICAL LOGGING ERROR:', e.message);
   }
 
-  // Return a 200/500 response immediately without loading the NestJS app
-  // The important part is that the console logs are captured by Vercel.
+  // Return a response and exit gracefully to persist logs
   res.writeHead(500, { 'Content-Type': 'text/plain' });
   res.end(
     'Deployment Path Debugging Complete. Check Vercel Logs for File Structure.'
