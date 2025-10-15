@@ -6,13 +6,14 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { Request, Response } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   // can we use express here to add a root route?
   const expressApp = app.getHttpAdapter().getInstance();
-  expressApp.get('/', (req, res) => {
+  expressApp.get('/', (req: Request, res: Response) => {
     res.send('Hello World!');
   });
 
