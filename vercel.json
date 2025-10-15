@@ -1,14 +1,15 @@
 {
-  "functions": {
-    "api/index.js": {
-      "runtime": "@vercel/node@2.0.0",
-      "includeFiles": "api/**"
-    }
+  "version": 2,
+  "github": {
+    "enabled": false
   },
-  "routes": [
+  "builds": [
     {
-      "src": "/(.*)",
-      "dest": "api/index.js"
+      "src": "/apps/api/backend/main.ts",
+      "use": "@vercel/node"
     }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/apps/api/backend/main.ts", "methods": ["GET"] }
   ]
 }

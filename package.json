@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build:backend": "npx nx build backend && cp -R apps/backend/dist/. api/dist/"
+    "build:backend": "npx nx build backend"
   },
   "private": true,
   "dependencies": {
