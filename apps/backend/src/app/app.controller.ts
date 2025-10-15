@@ -7,7 +7,6 @@ export class AppController {
 
   @Get()
   getData() {
-    this.appService = new AppService();
     return this.appService.getData();
   }
 }
