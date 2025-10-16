@@ -5,9 +5,9 @@
   },
   "builds": [
     {
-      "src": "/dist/main.ts",
+      "src": "/dist/main.js",
       "use": "@vercel/node"
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "/dist/main.ts", "methods": ["GET"] }]
+  "routes": [{ "src": "/(.*)", "dest": "/dist/main.js", "methods": ["GET"] }]
 }
