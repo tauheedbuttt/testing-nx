@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build:backend": "npx nx build backend"
+    "build:backend": "npx nx build backend",
+    "deploy:backend": "npm run build:backend && vercel --prod"
   },
   "private": true,
   "dependencies": {
