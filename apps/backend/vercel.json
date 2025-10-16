@@ -9,5 +9,11 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "/dist/main.js", "methods": ["GET"] }]
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/main.js",
+      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
+    }
+  ]
 }
